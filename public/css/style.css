@@ -1,0 +1,362 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Quicksand:wght@300;500&display=swap');
+
+:root {
+    --bg: #fdfaf6;
+    --rose: #f2c9cc;
+    --sky: #c9dff2;
+    --ink: #4a4a4a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: 'Quicksand', sans-serif; overflow-x: hidden; }
+
+/* Background Graphics */
+.orb { position: fixed; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.5; transition: 1s ease; }
+.orb-1 { width: 600px; height: 600px; background: var(--rose); top: -10%; left: -10%; }
+.orb-2 { width: 500px; height: 500px; background: var(--sky); bottom: -10%; right: -10%; }
+
+/* Navigation */
+nav { padding: 2.5rem 5%; display: flex; justify-content: space-between; position: fixed; width: 100%; z-index: 1000; }
+.nav-link { text-decoration: none; color: var(--ink); font-size: 0.8rem; letter-spacing: 2px; margin-left: 2rem; opacity: 0.6; }
+
+/* Layouts */
+.hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 6rem; font-style: italic; font-weight: 300; }
+
+.story-card { background: rgba(255,255,255,0.4); backdrop-filter: blur(20px); margin: 5rem 10%; padding: 6rem; border-radius: 60px; border: 1px solid rgba(255,255,255,0.7); }
+.story-step { margin-bottom: 4rem; opacity: 0; transform: translateY(30px); transition: 1.5s ease; }
+
+/* Gallery */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; padding: 10rem 8%; }
+.photo-frame { background: white; padding: 20px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); opacity: 0; transform: translateY(30px); transition: 1.2s ease; }
+
+/* Animation Utility */
+.visible { opacity: 1 !important; transform: translateY(0) !important; }
+/* Advanced Gallery Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: 250px; /* Base row height */
+    grid-auto-flow: dense; /* Fills gaps automatically */
+    gap: 30px;
+}
+
+.photo-frame {
+    background: white;
+    padding: 15px;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Grid Spanning Logic */
+.photo-frame.tall { grid-row: span 2; }
+.photo-frame.wide { grid-column: span 2; }
+
+.img-container {
+    position: relative;
+    flex-grow: 1;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 1s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.photo-frame:hover img {
+    transform: scale(1.1);
+}
+
+/* Hover Overlay */
+.img-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.5s ease;
+}
+
+.photo-frame:hover .img-overlay {
+    opacity: 1;
+}
+
+.overlay-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--ink);
+}
+
+.frame-details {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.moment-num {
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    opacity: 0.3;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+    .photo-frame.wide { grid-column: span 1; }
+    .gallery-grid { grid-auto-rows: auto; }
+}
+/* Typography & Variables */
+:root {
+    --rose: #f2c9cc;
+    --blue: #c9dff2;
+    --dark: #2d2d2d;
+    --soft-white: #fdfaf6;
+}
+
+/* Hero Overhaul */
+.hero-minimal {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.main-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 15vw, 10rem);
+    font-weight: 300;
+    line-height: 0.9;
+}
+
+.text-italic { font-style: italic; opacity: 0.3; font-family: serif; }
+.text-rose { color: var(--rose); text-shadow: 0 0 30px rgba(242, 201, 204, 0.4); }
+.text-blue { color: var(--blue); text-shadow: 0 0 30px rgba(201, 223, 242, 0.4); }
+
+/* Story Flow (Timeline Style) */
+.story-flow { padding: 100px 10%; }
+
+.story-node {
+    display: flex;
+    align-items: center;
+    margin-bottom: 150px;
+    position: relative;
+}
+
+.node-content {
+    max-width: 600px;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 3rem;
+    border-radius: 40px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.node-accent {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 1;
+    opacity: 0.3;
+}
+.accent-rose { right: -50px; background: var(--rose); }
+.accent-blue { left: -50px; background: var(--blue); }
+
+/* Individual Voices */
+.voices-section {
+    display: flex;
+    gap: 20px;
+    padding: 0 5%;
+    margin-bottom: 100px;
+}
+
+.voice-card {
+    flex: 1;
+    padding: 5rem 3rem;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    background: white;
+    transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.voice-card:hover { transform: scale(0.98); }
+
+.quote-mark {
+    font-family: 'Cormorant Garamond';
+    font-size: 8rem;
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    opacity: 0.1;
+}
+
+.quote-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+}
+
+.quote-sign {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    opacity: 0.4;
+}
+
+/* Aesthetic Button */
+.btn-aesthetic {
+    text-decoration: none;
+    color: var(--dark);
+    padding: 1.5rem 4rem;
+    border: 1px solid var(--dark);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    transition: 0.5s;
+    display: inline-block;
+}
+
+.btn-aesthetic:hover {
+    background: var(--dark);
+    color: white;
+}
+
+.final-cta { text-align: center; padding-bottom: 100px; }
+/* Gallery Layout */
+.gallery-wrapper {
+    padding: 160px 8% 100px;
+}
+
+.gallery-intro {
+    margin-bottom: 6rem;
+    max-width: 700px;
+}
+
+.display-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 300;
+    font-style: italic;
+    margin: 1rem 0;
+}
+
+.display-title span {
+    color: var(--rose);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: 250px; /* The "magic" number for masonry */
+    grid-auto-flow: dense;
+    gap: 40px;
+}
+
+/* Grid Spanning */
+.photo-frame.standard { grid-row: span 2; }
+.photo-frame.tall { grid-row: span 3; }
+.photo-frame.wide { grid-column: span 2; grid-row: span 2; }
+
+.photo-frame {
+    background: white;
+    padding: 15px;
+    border-radius: 35px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+    transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.img-container {
+    position: relative;
+    flex-grow: 1;
+    overflow: hidden;
+    border-radius: 25px;
+}
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 1.2s ease;
+}
+
+.photo-frame:hover {
+    transform: translateY(-10px) rotate(1deg);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+}
+
+.photo-frame:hover img {
+    transform: scale(1.1);
+}
+
+/* Overlay Effect */
+.img-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.6s ease;
+}
+
+.photo-frame:hover .img-overlay {
+    opacity: 1;
+}
+
+.overlay-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+}
+
+.frame-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0.5rem 0.5rem;
+}
+
+.moment-tag {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    opacity: 0.4;
+}
+
+.glow-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 850px) {
+    .photo-frame.wide { grid-column: span 1; }
+    .gallery-grid { grid-auto-rows: auto; display: block; }
+    .photo-frame { margin-bottom: 30px; height: 400px; }
+}

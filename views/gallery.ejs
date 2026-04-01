@@ -1,0 +1,256 @@
+<%- include('partials/header') %>
+
+<main class="gallery-wrapper">
+    <header class="gallery-intro">
+        <span class="eyebrow">LOCAL ARCHIVE</span>
+        <h2 class="display-title">Visual <span>Chronicle</span></h2>
+        <p class="intro-text">
+            A small glimpses at their journey. Every frame tells a story.
+        </p>
+    </header>
+    
+    <div class="gallery-grid">
+        <% 
+            const moments = [
+                { id: 1, title: 'Their First Christmas', type: 'tall', color: 'var(--rose)' },
+                { id: 2, title: 'First Valentines Day', type: 'standard', color: 'var(--sky)' },
+                { id: 3, title: 'RWRB Photoshoot', type: 'wide', color: 'var(--rose)' },
+                { id: 4, title: 'First Photobook', type: 'standard', color: 'var(--sky)' },
+                { id: 5, title: 'First Fancon', type: 'tall', color: 'var(--rose)' },
+                { id: 6, title: 'Halloween', type: 'standard', color: 'var(--sky)' },
+                { id: 7, title: 'In Rome', type: 'wide', color: 'var(--rose)' },
+                { id: 8, title: 'Valentines Day 2026', type: 'standard', color: 'var(--sky)' },
+                { id: 9, title: 'Christmas 2026', type: 'tall', color: 'var(--rose)' },
+                { id: 10, title: 'RomeMok', type: 'standard', color: 'var(--sky)' },
+                { id: 11, title: 'Legendary Songkran 2025', type: 'wide', color: 'var(--rose)' },
+                { id: 12, title: 'Thamepo', type: 'standard', color: 'var(--sky)' }
+            ];
+        %>
+
+        <% moments.forEach(moment => { %>
+            <div class="photo-frame <%= moment.type %>">
+                <div class="img-container">
+                    <img src="/images/img<%= moment.id %>.png" 
+                         alt="<%= moment.title %>" 
+                         loading="lazy"
+                         onerror="this.src='https://via.placeholder.com/800x1000/f2c9cc/3a3a3a?text=img<%= moment.id %>+missing'">
+                    
+                    <div class="img-overlay">
+                        <span class="overlay-text"><%= moment.title %></span>
+                    </div>
+                </div>
+                <div class="frame-footer">
+                    <span class="moment-tag">FILE // IMG<%= moment.id %></span>
+                    <div class="glow-dot" style="background: <%= moment.color %>;"></div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</main>
+
+<style>
+    /* 1. BASE WRAPPER RESPONSIVENESS */
+    .gallery-wrapper { 
+        padding: 120px 5% 80px; /* Reduced padding for mobile */
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    /* 2. THE RESPONSIVE GRID */
+    .gallery-grid {
+        display: grid;
+        /* Desktop: 3-4 columns | Tablet: 2 columns | Mobile: 1 column */
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-auto-rows: 220px;
+        grid-auto-flow: dense;
+        gap: 25px;
+    }
+
+    /* 3. MASONRY SPANNING (Only for Desktop/Tablet) */
+    @media (min-width: 768px) {
+        .photo-frame.standard { grid-row: span 2; }
+        .photo-frame.tall { grid-row: span 3; }
+        .photo-frame.wide { grid-column: span 2; grid-row: span 2; }
+    }
+
+    /* 4. MOBILE SPECIFIC OVERRIDES */
+    @media (max-width: 767px) {
+        .gallery-grid {
+            grid-template-columns: 1fr; /* Single column */
+            grid-auto-rows: auto; /* Let content dictate height */
+            gap: 40px; /* More breathing room on small screens */
+        }
+        
+        .photo-frame {
+            height: 450px; /* Fixed height for consistency on mobile */
+            grid-row: auto !important;
+            grid-column: auto !important;
+        }
+
+        .display-title {
+            font-size: 2.8rem !important; /* Smaller text for phones */
+        }
+    }
+
+    /* 5. AESTHETIC STYLING (Kept consistent) */
+    .photo-frame {
+        background: white;
+        padding: 12px;
+        border-radius: 30px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+        transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .img-container {
+        position: relative;
+        flex-grow: 1;
+        overflow: hidden;
+        border-radius: 22px;
+        background: #f9f9f9;
+    }
+
+    .img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 1.2s ease;
+    }
+
+    .photo-frame:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.06);
+    }
+
+    .img-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: 0.5s ease;
+    }
+
+    .photo-frame:hover .img-overlay { opacity: 1; }
+
+    .overlay-text {
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 1.3rem;
+        padding: 0 20px;
+        text-align: center;
+    }
+
+    .frame-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0.5rem 0.2rem;
+    }
+
+    .moment-tag {
+        font-size: 0.55rem;
+        letter-spacing: 2px;
+        opacity: 0.4;
+    }
+
+    .glow-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+    }
+    /* SOFT AESTHETIC REFINEMENTS */
+    .gallery-wrapper { padding: 160px 8% 100px; }
+    
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-auto-rows: 250px;
+        grid-auto-flow: dense;
+        gap: 30px;
+    }
+
+    /* Masonry Spanning */
+    .photo-frame.standard { grid-row: span 2; }
+    .photo-frame.tall { grid-row: span 3; }
+    .photo-frame.wide { grid-column: span 2; grid-row: span 2; }
+
+    .photo-frame {
+        background: white;
+        padding: 15px;
+        border-radius: 35px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+        transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .img-container {
+        position: relative;
+        flex-grow: 1;
+        overflow: hidden;
+        border-radius: 25px;
+        background: #f9f9f9; /* Placeholder color while loading */
+    }
+
+    .img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: contrast(0.95) brightness(1.02);
+        transition: 1.2s ease;
+    }
+
+    .photo-frame:hover {
+        transform: translateY(-10px) rotate(0.5deg);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+    }
+
+    .photo-frame:hover img { transform: scale(1.08); }
+
+    .img-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: 0.6s ease;
+    }
+
+    .photo-frame:hover .img-overlay { opacity: 1; }
+
+    .overlay-text {
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+    .frame-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0.5rem 0.5rem;
+    }
+
+    .moment-tag {
+        font-size: 0.6rem;
+        letter-spacing: 3px;
+        opacity: 0.4;
+    }
+
+    .glow-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+</style>
+
+<%- include('partials/footer') %>
